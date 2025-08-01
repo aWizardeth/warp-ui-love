@@ -1139,6 +1139,44 @@ export const GYATT_MEMECOIN_TOKEN_BASE_ONLY: Token = {
   additionalWarning: null,
 }
 
+const FAITH_MEMECOIN_ASSET_ID_MAINNET = ''
+const FAITH_MEMECOIN_ADDRESS_ETH_MAINNET = '0xb66f07d7bf1f048ea0600b3e6eb480eda951392a'
+
+export const FAITH_MEMECOIN_TOKEN_ETH_ONLY: Token = {
+  symbol: 'FAITH',
+  getSpecificSymbol: makeCoinsetNativeToken('FAITH'),
+  sourceNetworkType: NetworkType.COINSET,
+  supported: [
+    {
+      evmNetworkId: ETHEREUM_NETWORK.id,
+      coinsetNetworkId: CHIA_NETWORK.id,
+      assetId: FAITH_MEMECOIN_ASSET_ID_MAINNET,
+      contractAddress: FAITH_MEMECOIN_ADDRESS_ETH_MAINNET
+    },
+  ],
+  memecoin: true,
+  additionalWarning: null,
+}
+
+const tREE31000_MEMECOIN_ASSET_ID_MAINNET = 'a84a40fec6d65fc97ea42e46ff7b2ea66ad66ab49b02d1673539d91d54fabae2'
+const tREE31000_MEMECOIN_ADDRESS_BASE_MAINNET = '0x21cc862b51865ae3b71482c1351dcb6badd19315'
+
+export const tREE31000_MEMECOIN_TOKEN_BASE_ONLY: Token = {
+  symbol: '🌳',
+  getSpecificSymbol: makeCoinsetNativeToken('🌳'),
+  sourceNetworkType: NetworkType.COINSET,
+  supported: [
+    {
+      evmNetworkId: BASE_NETWORK.id,
+      coinsetNetworkId: CHIA_NETWORK.id,
+      assetId: tREE31000_MEMECOIN_ASSET_ID_MAINNET,
+      contractAddress: tREE31000_MEMECOIN_ADDRESS_BASE_MAINNET
+    },
+  ],
+  memecoin: true,
+  additionalWarning: null,
+}
+
 export const TOKENS = TESTNET ? [
   ETH_TOKEN,
   XCH_TOKEN,
@@ -1152,8 +1190,8 @@ export const TOKENS = TESTNET ? [
   PIZZA_MEMECOIN_TOKEN_BASE_ONLY,
   HOA_TOKEN_BASE_ONLY,
   BEPE_MEMECOIN_TOKEN_BASE_ONLY,
-  PP_MEMECOIN_TOKEN_BASE_ONLY
-
+  PP_MEMECOIN_TOKEN_BASE_ONLY,
+  tREE31000_MEMECOIN_TOKEN_BASE_ONLY
 ]
 
 declare module 'wagmi' {
