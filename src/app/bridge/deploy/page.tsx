@@ -32,10 +32,12 @@ function ActualDeployPage() {
   const dataCompleted = assetId.length === 64 && chiaSymbol.length >= 2 && name.length > 0;
 
   // Convert symbol to Unicode code points
-const convertSymbolToUnicode = (symbol) => {
+const convertSymbolToUnicode = (symbol: string) => {
   return Array.from(symbol)
     .map(char => {
-      const codePoint = char.codePointAt(0).toString(16).toUpperCase();
+      const cp = char.codePointAt(0);
+      if (cp === undefined) return '';
+      const codePoint = cp.toString(16).toUpperCase();
       return codePoint !== 'FE0F' ? `U+${codePoint}` : ''; // Exclude U+FE0F
     })
     .filter(Boolean) // Remove empty entries
@@ -43,7 +45,7 @@ const convertSymbolToUnicode = (symbol) => {
 };
 
   // Handle chiaSymbol change
-  const handleChiaSymbolChange = (e) => {
+  const handleChiaSymbolChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSymbol = e.target.value;
     setChiaSymbol(newSymbol);
     setConvertedSymbol(convertSymbolToUnicode(newSymbol));
