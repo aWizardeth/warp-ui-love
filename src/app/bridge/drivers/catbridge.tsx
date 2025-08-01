@@ -59,6 +59,9 @@ export function getUnlockerPuzzle(
   portalReceiverLauncherId: string,
   assetId: string | null
 ): GreenWeb.clvm.SExp {
+  while (messageSource.startsWith("00")) {
+    messageSource = messageSource.slice(2);
+  }
   return GreenWeb.util.sexp.curry(
     GreenWeb.util.sexp.fromHex(UNLOCKER_MOD),
     [
@@ -300,7 +303,7 @@ export async function lockCATs(
     catSourceCoinLineageProof
   ] = parseXCHAndCATOffer(offer);
 
-  if(tokenTailHash !== tokenTailHash) {
+  if(tokenTailHash !== tailHashHex) {
     alert("You were about to offer the wrong CAT...");
     return [new GreenWeb.util.serializer.types.SpendBundle(), ""];
   }
@@ -529,7 +532,7 @@ export async function unlockCATs(
   const lockedCoins: InstanceType<typeof GreenWeb.Coin>[] = coinRecords.map((coinRecord: any) => GreenWeb.util.goby.parseGobyCoin({
     parent_coin_info: GreenWeb.util.unhexlify(coinRecord.coin.parent_coin_info),
     puzzle_hash: GreenWeb.util.unhexlify(coinRecord.coin.puzzle_hash),
-    amount: coinRecord.coin.amount
+    amount: GreenWeb.BigNumber.from(coinRecord.coin.amount.toString())
   })!);
 
   if(tokenTailHash !== null) {
@@ -557,7 +560,7 @@ export async function unlockCATs(
       lockedCoinProofs.push(GreenWeb.util.goby.parseGobyCoin({
         parent_coin_info: GreenWeb.util.unhexlify(parentSpend.coin.parent_coin_info),
         puzzle_hash: GreenWeb.util.sexp.sha256tree(args[2]), // inner puzzle hash
-        amount: parentSpend.coin.amount,
+        amount: GreenWeb.BigNumber.from(parentSpend.coin.amount.toString()),
       })!);
     }
   }
@@ -580,7 +583,6 @@ export async function unlockCATs(
     unlockerCoin,
     updateStatus
   );
-
   coinSpends.push(...portalCoinSpends);
   sigStrings.push(...portalSigs);
 

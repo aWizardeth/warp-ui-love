@@ -257,8 +257,12 @@ function StepThreeCoinsetDestination({
       }
 
       window.localStorage.setItem("bls_retries", "0")
-      const pushTxResp = await pushTx(destinationChain.rpcUrl, sb)
-      if (!pushTxResp.success) {
+      const [pushTxResp, feeError] = await pushTx(destinationChain.rpcUrl, sb)
+      if (feeError) {
+        alert(`Transaction push failed - fee is too low`)
+          router.back()
+          return;
+      } else if (!pushTxResp.success) {
         const sbJson = sbToJSON(sb)
         await navigator.clipboard.writeText(JSON.stringify(sbJson, null, 2))
         toast.error("Failed to push transaction - please check console for more details.", { duration: 20000, id: "failed-to-push-transaction" })
@@ -291,6 +295,7 @@ function StepThreeCoinsetDestination({
 
     return (
       <GenerateOfferPrompt
+        sourceChain={sourceChain}
         destinationChain={destinationChain}
         amount={isNativeCAT ? 1 : amount}
         rawMessage={rawMessage}
@@ -335,11 +340,15 @@ function ChiaFeeWarning({
   const originalFee = portalInfo.mempoolSbFee.eq(0) ? originalCost.mul(4) : GreenWeb.BigNumber.from(portalInfo.mempoolSbFee);
 
   const estAdditionalCost = GreenWeb.BigNumber.from("200000000");
-  const recommendedFeeMojos: GreenWeb.BigNumber = (
+  let recommendedFeeMojos: GreenWeb.BigNumber = (
     originalCost.add(estAdditionalCost) // new cost = original_cost + estimated cost for adding new coin spends (200 mil.)
   ).mul(
     (originalFee.add(originalCost)).div(originalCost) // fpc + 1 = original_fee / original_cost + 1 = (original_fee + original_cost) / original_cost
   )
+  const minPositiveFee = GreenWeb.BigNumber.from("2500000000");
+  if(recommendedFeeMojos.gt(0) && recommendedFeeMojos.lt(minPositiveFee)) {
+    recommendedFeeMojos = minPositiveFee;
+  }
 
   return (
     <div className="p-6 mt-2 bg-background flex flex-col gap-2 font-light rounded-md relative animate-in fade-in slide-in-from-bottom-2 duration-500">
@@ -356,11 +365,13 @@ function ChiaFeeWarning({
 }
 
 function GenerateOfferPrompt({
+  sourceChain,
   destinationChain,
   rawMessage,
   amount,
   onOfferGenerated,
 }: {
+  sourceChain: Network,
   destinationChain: Network,
   rawMessage: RawMessage,
   amount: number,
@@ -369,6 +380,7 @@ function GenerateOfferPrompt({
   const [portalInfo, setPortalInfo] = useState<PortalInfo | null>(null)
   const [status, setStatus] = useState("Fetching portal bootstrap coin id...")
   const [waitingForTx, setWaitingForTx] = useState(false)
+  const [welcomeKitOffer, setWelcomeKitOffer] = useState<string | null>(null)
   const { createOffer, address } = useWallet()
   const isConnectedToChiaWallet = Boolean(address)
 
@@ -388,6 +400,23 @@ function GenerateOfferPrompt({
     refetchInterval: 5000,
   });
 
+  useQuery({
+    queryKey: ['StepThree_checkWelcomeKit', rawMessage.sourceChainHex, rawMessage.nonce],
+    queryFn: async () => {
+      if (destinationChain.type === NetworkType.COINSET) {
+        const response = await fetch('https://welcome-kits.kuhi.to/offers')
+        const data = await response.json()
+        const lookupKey = `${sourceChain.id}-${rawMessage.nonce.replace("0x", "")}`
+        if (data.active_offers && data.active_offers[lookupKey]) {
+          console.log("Welcome kit offer found")
+          setWelcomeKitOffer(data.active_offers[lookupKey])
+        }
+      }
+      return null
+    },
+    enabled: destinationChain.type === NetworkType.COINSET
+  });
+
   const generateOfferPls = async () => {
     setWaitingForTx(true)
     try {
@@ -398,7 +427,8 @@ function GenerateOfferPrompt({
             amount: amount
           }
         ],
-        requestAssets: []
+        requestAssets: [],
+        fee: 2500000000,
       }
       const offer = await createOffer(params)
       if (offer) {
@@ -425,6 +455,24 @@ function GenerateOfferPrompt({
   return (
     <>
       {portalInfo.mempoolSb !== null && <ChiaFeeWarning portalInfo={portalInfo} />}
+      {portalInfo.mempoolSb === null && welcomeKitOffer !== null && (
+        <div className="p-6 mb-2 bg-green-100 dark:bg-green-900 flex flex-col gap-2 font-light rounded-md relative animate-in fade-in slide-in-from-bottom-2 duration-500">
+          <h3 className="text-xl font-medium">Welcome Kit Available</h3>
+          <p className="opacity-90">
+            Your transaction is eligible to receive a welcome kit - click the button below 
+            to finish bridging and receive 0.00042 additional XCH. Welcome to Chia!
+          </p>
+          <p className="opacity-90 w-full text-right pr-4">
+            - Yak
+          </p>
+
+          <Button className="w-full mt-4 h-14 bg-theme-purple hover:bg-theme-purple text-primary hover:opacity-80 text-xl" onClick={() => {
+            onOfferGenerated(portalInfo?.coinId ?? "", welcomeKitOffer)
+          }}>
+            Claim Welcome Kit
+          </Button>
+        </div>
+      )}
       <div className="p-6 mt-2 bg-background flex flex-col gap-2 font-light rounded-md relative animate-in fade-in slide-in-from-bottom-2 duration-500">
         <p className="px-4">
           Click the button below to create an offer for minting assets on {destinationChain.displayName}.
