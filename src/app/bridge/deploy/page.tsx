@@ -32,7 +32,7 @@ function ActualDeployPage() {
   const dataCompleted = assetId.length === 64 && chiaSymbol.length >= 2 && name.length > 0;
 
   // Convert symbol to Unicode code points
-const convertSymbolToUnicode = (symbol) => {
+const convertSymbolToUnicode = (symbol: string) => {
   return Array.from(symbol)
     .map(char => {
       const codePoint = char.codePointAt(0).toString(16).toUpperCase();
