@@ -1120,6 +1120,25 @@ export const LOVE_MEMECOIN_TOKEN_BASE_ONLY: Token = {
   additionalWarning: null,
 }
 
+const CASTER_MEMECOIN_ASSET_ID_MAINNET = 'a09af8b0d12b27772c64f89cf0d1db95186dca5b1871babc5108ff44f36305e6'
+const CASTER_MEMECOIN_ADDRESS_BASE_MAINNET = '0x09Aa909Eea859f712f2Ae3dd1872671D2363f6f4'
+
+export const CASTER_MEMECOIN_TOKEN_BASE_ONLY: Token = {
+  symbol: '✨❤️‍🔥🧙‍♂️',
+  getSpecificSymbol: makeCoinsetNativeToken('✨❤️‍🔥🧙‍♂️'),
+  sourceNetworkType: NetworkType.COINSET,
+  supported: [
+    {
+      evmNetworkId: BASE_NETWORK.id,
+      coinsetNetworkId: CHIA_NETWORK.id,
+      assetId: CASTER_MEMECOIN_ASSET_ID_MAINNET,
+      contractAddress: CASTER_MEMECOIN_ADDRESS_BASE_MAINNET
+    },
+  ],
+  memecoin: true,
+  additionalWarning: null,
+}
+
 const GYATT_MEMECOIN_ASSET_ID_BASE_MAINNET = '6188396ebb38365be3f7aad1d5c0310d1b6ce66180d8847e5da096e2ce33ba1a'
 const GYATT_MEMECOIN_ADDRESS_BASE_MAINNET = '0xA4c74853BE20F750ae5BeAbcAF4BEa93e6eF9bF7'
 
@@ -1182,6 +1201,7 @@ export const TOKENS = TESTNET ? [
   XCH_TOKEN,
 ] : [
   XCH_TOKEN,
+  CASTER_MEMECOIN_TOKEN_BASE_ONLY,
   SP_MEMECOIN_TOKEN_BASE_ONLY,
   LOVE_MEMECOIN_TOKEN_BASE_ONLY,
   SPROUT_MEMECOIN_TOKEN_BASE_ONLY,
