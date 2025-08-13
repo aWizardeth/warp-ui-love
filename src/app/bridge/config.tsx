@@ -3,6 +3,7 @@ import { ethers } from "ethers"
 import { http } from 'wagmi'
 import { sepolia, baseSepolia, mainnet, base } from 'wagmi/chains'
 import { getWrappedERC20AssetID } from "./drivers/erc20bridge"
+require('dotenv').config();
 
 export const TESTNET = process.env.NEXT_PUBLIC_TESTNET === "true";
 export const BASE_RPC_ENV: string = getEnvVar("BASE_RPC");
