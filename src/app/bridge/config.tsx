@@ -5,14 +5,22 @@ import { sepolia, baseSepolia, mainnet, base } from 'wagmi/chains'
 import { getWrappedERC20AssetID } from "./drivers/erc20bridge"
 
 export const TESTNET = process.env.NEXT_PUBLIC_TESTNET === "true";
-export const BASE_RPC_ENV = process.env.BASE_RPC;
-export const ETH_RPC_ENV = process.env.ETH_RPC;
+export const BASE_RPC_ENV: string = getEnvVar("BASE_RPC");
+export const ETH_RPC_ENV: string = getEnvVar("ETH_RPC");
 export const WATCHER_API_ROOT = TESTNET ? 'https://watcher-api.testnet.warp.green/' : 'https://watcher-api.warp.green/';
 export const STATUS_URL = TESTNET ? 'https://warp-validators.bufflehead.org/' : 'https://status.warp.green/';
 
 export enum NetworkType {
   COINSET = 'coinset',
   EVM = 'evm'
+}
+
+function getEnvVar(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Environment variable "${name}" is not set.`);
+  }
+  return value;
 }
 
 export type Network = {
