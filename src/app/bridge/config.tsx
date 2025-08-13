@@ -3,11 +3,11 @@ import { ethers } from "ethers"
 import { http } from 'wagmi'
 import { sepolia, baseSepolia, mainnet, base } from 'wagmi/chains'
 import { getWrappedERC20AssetID } from "./drivers/erc20bridge"
-require('dotenv').config();
+
 
 export const TESTNET = process.env.NEXT_PUBLIC_TESTNET === "true";
-export const BASE_RPC_ENV: string = getEnvVar("BASE_RPC");
-export const ETH_RPC_ENV: string = getEnvVar("ETH_RPC");
+//export const BASE_RPC_ENV: string = getEnvVar("BASE_RPC");
+//export const ETH_RPC_ENV: string = getEnvVar("ETH_RPC");
 export const WATCHER_API_ROOT = TESTNET ? 'https://watcher-api.testnet.warp.green/' : 'https://watcher-api.warp.green/';
 export const STATUS_URL = TESTNET ? 'https://warp-validators.bufflehead.org/' : 'https://status.warp.green/';
 
@@ -169,7 +169,7 @@ export const ETHEREUM_NETWORK: Network = TESTNET ? {
   id: 'eth',
   type: NetworkType.EVM,
   chainId: mainnet.id,
-  rpcUrl: ETH_RPC_ENV,
+  rpcUrl: process.env.ETH_RPC ?? "",
   explorerUrl: 'https://etherscan.io',
   messageToll: ethers.parseEther("0.00001"),
   signatureThreshold: 7,
@@ -224,7 +224,7 @@ export const BASE_NETWORK: Network = TESTNET ? {
   id: 'bse',
   chainId: base.id,
   type: NetworkType.EVM,
-  rpcUrl: BASE_RPC_ENV,
+  rpcUrl: process.env.BASE_RPC ?? "",
   // rpcUrl: 'https://mainnet.base.org',
   explorerUrl: 'https://basescan.org',
   messageToll: ethers.parseEther("0.00001"),
