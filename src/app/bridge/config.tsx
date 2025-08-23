@@ -1263,6 +1263,26 @@ export const HOA_MEMECOIN_TOKEN_BASE_ONLY: Token = {
   additionalWarning: null,
 }
 
+const MAFFF_MEMECOIN_ASSET_ID_MAINNET = 'ea6da19358a08fc000002985c8d1ffffc687346aadf2e9a0d98e49f567abccba'
+const MAFFF_MEMECOIN_ADDRESS_BASE_MAINNET = '0x1e0f022E43464E1bA9BbEa4A3D1ac1dB25561044'
+
+export const MAFFF_MEMECOIN_TOKEN_BASE_ONLY: Token = {
+  symbol: 'MAFFF',
+  getSpecificSymbol: makeCoinsetNativeToken('MAFFF'),
+  sourceNetworkType: NetworkType.COINSET,
+  supported: [
+    {
+      evmNetworkId: BASE_NETWORK.id,
+      coinsetNetworkId: CHIA_NETWORK.id,
+      assetId: MAFFF_MEMECOIN_ASSET_ID_MAINNET,
+      contractAddress: MAFFF_MEMECOIN_ADDRESS_BASE_MAINNET
+    },
+  ],
+  memecoin: true,
+  additionalWarning: null,
+}
+
+
 export const TOKENS = TESTNET ? [
   ETH_TOKEN,
   XCH_TOKEN,
@@ -1286,7 +1306,8 @@ export const TOKENS = TESTNET ? [
   BEPE_MEMECOIN_TOKEN_BASE_ONLY,
   PP_MEMECOIN_TOKEN_BASE_ONLY,
   NECK_MEMECOIN_TOKEN_BASE_ONLY,
-  tREE31000_MEMECOIN_TOKEN_BASE_ONLY
+  tREE31000_MEMECOIN_TOKEN_BASE_ONLY,
+  MAFFF_MEMECOIN_TOKEN_BASE_ONLY
 
   //USDC_TOKEN_MAINNET_ONLY,
   //ETH_TOKEN,
@@ -1340,7 +1361,7 @@ export const WALLETCONNECT_PROJECT_ID_ETH = 'e47a64f2fc7214f6c9f71b8b71e5e786'
 export const WALLETCONNECT_PROJECT_ID_XCH = '777b63154ba9ec11877caf45a17b523e'
 
 export const xchWcMetadata = {
-  name: 'warp.aWizrad.dev Bridge XCH Interface',
+  name: 'warp.aWizard.dev Bridge XCH Interface',
   description: 'aWizard Bridge powered by the warp.green cross-chain messaging protocol',
   url: 'https://warp.awizard.dev',
   icons: [
@@ -1348,7 +1369,7 @@ export const xchWcMetadata = {
   ]
 }
 export const ethWcMetadata = {
-  name: 'warp.aWizrad.dev Bridge ETH Interface',
+  name: 'warp.aWizard.dev Bridge ETH Interface',
   description: 'aWizard Bridge by the warp.green cross-chain messaging protocol',
   url: 'https://warp.awizard.dev',
   icons: [
