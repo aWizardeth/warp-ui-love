@@ -53,8 +53,8 @@ export default function LandingPage() {
           <div className="col-start-1 row-start-2 flex flex-col items-center justify-center h-full border bg-accent/50 hover:bg-accent/90 transition-colors rounded-lg animate-in fade-in slide-in-from-bottom-2 duration-500">
             <MessagesDelivered />
           </div>
-          <div className="col-start-1 row-start-5 lg:row-start-2 lg:col-start-2 flex flex-col items-center justify-center h-full border bg-accent/50 hover:bg-accent/90 transition-colors rounded-lg animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <LiveApps appIndex={0} />
+          <div className="lg:col-start-1 2xl:col-start-2 flex max-h-[600px] 2xl:max-h-max flex-col items-center justify-center h-full border row-span-2 bg-accent/50 hover:bg-accent/90 transition-colors rounded-lg animate-in fade-in slide-in-from-bottom-2 duration-500">
+              <LiveApps appIndex={0} />
           </div>
           <div className="lg:col-start-1 2xl:col-start-3 flex max-h-[600px] 2xl:max-h-max flex-col items-center justify-center h-full border row-span-2 bg-accent/50 hover:bg-accent/90 transition-colors rounded-lg animate-in fade-in slide-in-from-bottom-2 duration-500">
             <Messages />
@@ -64,9 +64,6 @@ export default function LandingPage() {
             <div className="flex w-full h-full justify-end gap-4 animate-in fade-in slide-in-from-bottom-16 duration-500">
               <SupportedNetworksCard />
             </div>
-          </div>
-          <div className="col-start-1 row-start-6 lg:row-start-3 lg:col-start-2 flex flex-col items-center justify-center h-full border bg-accent/50 hover:bg-accent/90 transition-colors rounded-lg animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <LiveApps appIndex={1} />
           </div>
         </section>
 

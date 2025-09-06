@@ -22,6 +22,10 @@ interface StatsResponse {
   LOVE_total_volume: number
   PIZZA_total_volume: number
   PIZZA_locked: number
+  CASTER_total_volume: number
+  CASTER_locked: number
+    // Add fallback types for potential new tokens
+  [key: string]: number;
 }
 
 const liveAppsConfig = [
@@ -30,30 +34,41 @@ const liveAppsConfig = [
     name: "CAT Bridge",
     tokens: [
       {
-        symbol: "XCH",
-        accessorPrefixKey: "XCH",
-        decimals: 12
-      },
-      {
-        symbol: "HOA",
-        accessorPrefixKey: "HOA",
+        symbol: "✨❤️‍🔥🧙‍♂️",
+        accessorPrefixKey: "✨❤️‍🔥🧙‍♂️", // Ensure this matches how data keys are stored/used
         decimals: 3
       },
       {
-        symbol: "SPROUT",
+        symbol: "🌱",
         accessorPrefixKey: "SPROUT",
         decimals: 3
-      },
+      },      
       {
-        symbol: "LOVE",
+        symbol: "❤️",
         accessorPrefixKey: "LOVE",
         decimals: 3
       },
       {
-        symbol: "PIZZA",
+        symbol: "🍕",
         accessorPrefixKey: "PIZZA",
         decimals: 3
       },
+      {
+        symbol: "🧙‍♂️",
+        accessorPrefixKey: "MANA",
+        decimals: 3
+      },
+      {
+        symbol: "🪄⚡️",
+        accessorPrefixKey: "SP",
+        decimals: 3
+      },      
+      {
+        symbol: "🍊",
+        accessorPrefixKey: "HOA",
+        decimals: 3
+      },
+
     ]
   },
   {
@@ -94,13 +109,19 @@ function LiveApps({ appIndex = 0 }: { appIndex: number }) {
     queryFn: () => fetch(`${WATCHER_API_ROOT}stats`).then(res => res.json())
   })
 
-
+  // Logging the entire data object for inspection
+  console.log("Fetched data:", data);
   if (isLoading || !data) return <div className="h-full min-h-[350px]"></div>
 
 
   const getTokenTableRow = (token: typeof liveAppsConfig[0]["tokens"][0]) => {
-    const lockedValue = formatNumber(data[`${token.accessorPrefixKey}_locked` as keyof StatsResponse], token.decimals)
-    const volumeValue = formatNumber(data[`${token.accessorPrefixKey}_total_volume` as keyof StatsResponse], token.decimals)
+    const lockedKey = `${token.accessorPrefixKey}_locked` as keyof StatsResponse;
+    const volumeKey = `${token.accessorPrefixKey}_total_volume` as keyof StatsResponse;
+    // Log specific key values
+    console.log(`Data for ${token.symbol}: Locked =`, data[lockedKey], ", Total Volume =", data[volumeKey]);
+    
+    const lockedValue = formatNumber(data[lockedKey], token.decimals);
+    const volumeValue = formatNumber(data[volumeKey], token.decimals);
     return (
       <tr className="border-b last:border-0" key={token.accessorPrefixKey}>
         <td className="text-center py-2">
