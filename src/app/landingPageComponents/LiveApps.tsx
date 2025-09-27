@@ -20,6 +20,8 @@ interface StatsResponse {
   SPROUT_locked: number
   LOVE_locked: number
   LOVE_total_volume: number
+  "❤️_locked": number
+  "❤️_total_volume": number
   PIZZA_total_volume: number
   PIZZA_locked: number
   CASTER_total_volume: number
