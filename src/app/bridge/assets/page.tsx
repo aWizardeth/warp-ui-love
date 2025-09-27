@@ -70,6 +70,10 @@ function TokenItem({ token, tokenInfo, highlightedAssets }: { token: any, tokenI
           {withToolTip(sourceChainIcon, sourceChainName)}
           <p className='text-xl font-light'>{token.symbol}</p>
         </div>
+        {/* Source Asset ID (Exclude for XCH) */}
+        {token.symbol !== 'XCH' && (
+          <CopyableLongHexString hexString={sourceChainTokenAddr} className='ml-10 mt-2' />
+        )}
       </div>
       <DownArrowIcon />
       <div className={cn('flex flex-col p-4 bg-background border-background border-2 rounded-md', highlightedAssets.includes(destChainTokenAddr) && 'border-theme-purple')}>
@@ -84,8 +88,8 @@ function TokenItem({ token, tokenInfo, highlightedAssets }: { token: any, tokenI
             <AddERCTokenButton tokenAddress={destChainTokenAddr} tokenChainId={destChain.chainId} className={cn(highlightedAssets.includes(destChainTokenAddr) && 'bg-theme-purple hover:bg-theme-purple hover:opacity-80 font-light hover:border-theme-purple')} />
           }
         </div>
+        {/* Destination Asset ID */}
         <CopyableLongHexString hexString={destChainTokenAddr} className='ml-10' />
-        {/* Additional custom rendering logic here */}
       </div>
     </div>
   );
