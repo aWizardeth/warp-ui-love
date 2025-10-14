@@ -26,6 +26,10 @@ interface StatsResponse {
   PIZZA_locked: number
   CASTER_total_volume: number
   CASTER_locked: number
+  BEPE_locked: number
+  BEPE_total_volume: number
+  CHIA_locked: number
+  CHIA_total_volume: number
     // Add fallback types for potential new tokens
   [key: string]: number;
 }
@@ -35,11 +39,11 @@ const liveAppsConfig = [
   {
     name: "CAT Bridge",
     tokens: [
-      {
-        symbol: "✨❤️‍🔥🧙‍♂️",
-        accessorPrefixKey: "✨❤️‍🔥🧙‍♂️", // Ensure this matches how data keys are stored/used
-        decimals: 3
-      },
+      //{
+      //  symbol: "✨❤️‍🔥🧙‍♂️",
+      //  accessorPrefixKey: "✨❤️‍🔥🧙‍♂️", // Ensure this matches how data keys are stored/used
+     //   decimals: 3
+     // },
       {
         symbol: "🌱",
         accessorPrefixKey: "SPROUT",
@@ -56,20 +60,36 @@ const liveAppsConfig = [
         decimals: 3
       },
       {
-        symbol: "🧙‍♂️",
-        accessorPrefixKey: "MANA",
-        decimals: 3
-      },
-      {
-        symbol: "🪄⚡️",
-        accessorPrefixKey: "SP",
-        decimals: 3
-      },      
-      {
         symbol: "🍊",
         accessorPrefixKey: "HOA",
         decimals: 3
       },
+      {
+        symbol: "BEPE",
+        accessorPrefixKey: "BEPE",
+        decimals: 3
+      },
+      {
+        symbol: "Neckcoin",
+        accessorPrefixKey: "NeckCoin",
+        decimals: 3
+      },
+      {
+        symbol: "$CHIA",
+        accessorPrefixKey: "$CHIA",
+        decimals: 3
+      },
+      //{
+    //    symbol: "🧙‍♂️",
+    //    accessorPrefixKey: "MANA",
+    //    decimals: 3
+    //  },
+    //  {
+    //    symbol: "🪄⚡️",
+    //    accessorPrefixKey: "SP",
+    //    decimals: 3
+    //  },      
+
 
     ]
   },
