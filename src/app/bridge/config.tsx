@@ -1282,6 +1282,25 @@ export const MAFFF_MEMECOIN_TOKEN_BASE_ONLY: Token = {
   additionalWarning: null,
 }
 
+const IYKYK_XCH_MEMECOIN_ASSET_ID_MAINNET = '623c352de013e561656678f57058f7728aab631aa3aaab685fbe7918cea9b001'
+const IYKYK_XCH_MEMECOIN_ADDRESS_BASE_MAINNET = '0x28Bc22d46d42cdba838F86E018F560c5080E3F6A'
+
+export const IYKYK_XCH_MEMECOIN_TOKEN_BASE_ONLY: Token = {
+  symbol: 'IYKYK',
+  getSpecificSymbol: makeCoinsetNativeToken('IYKYK/XCH'),
+  sourceNetworkType: NetworkType.COINSET,
+  supported: [
+    {
+      evmNetworkId: BASE_NETWORK.id,
+      coinsetNetworkId: CHIA_NETWORK.id,
+      assetId: IYKYK_XCH_MEMECOIN_ASSET_ID_MAINNET,
+      contractAddress: IYKYK_XCH_MEMECOIN_ADDRESS_BASE_MAINNET
+    },
+  ],
+  memecoin: true,
+  additionalWarning: null,
+}
+
 
 export const TOKENS = TESTNET ? [
   ETH_TOKEN,
@@ -1303,6 +1322,7 @@ export const TOKENS = TESTNET ? [
   PP_MEMECOIN_TOKEN_BASE_ONLY,
   NECK_MEMECOIN_TOKEN_BASE_ONLY,
   MAFFF_MEMECOIN_TOKEN_BASE_ONLY,
+  IYKYK_XCH_MEMECOIN_TOKEN_BASE_ONLY, 
   ogLOVE_MEMECOIN_TOKEN_BASE_ONLY,
   ogSPROUT_MEMECOIN_TOKEN_BASE_ONLY,
   ogPIZZA_MEMECOIN_TOKEN_BASE_ONLY,
