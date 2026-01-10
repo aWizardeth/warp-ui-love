@@ -16,9 +16,83 @@ interface StatsResponse {
   USDT_locked: number
   DBX_total_volume: number
   DBX_locked: number
+  SPROUT_total_volume: number
+  SPROUT_locked: number
+  LOVE_locked: number
+  LOVE_total_volume: number
+  "❤️_locked": number
+  "❤️_total_volume": number
+  PIZZA_total_volume: number
+  PIZZA_locked: number
+  CASTER_total_volume: number
+  CASTER_locked: number
+  BEPE_locked: number
+  BEPE_total_volume: number
+  CHIA_locked: number
+  CHIA_total_volume: number
+    // Add fallback types for potential new tokens
+  [key: string]: number;
 }
 
 const liveAppsConfig = [
+
+  {
+    name: "CAT Bridge",
+    tokens: [
+      //{
+      //  symbol: "✨❤️‍🔥🧙‍♂️",
+      //  accessorPrefixKey: "✨❤️‍🔥🧙‍♂️", // Ensure this matches how data keys are stored/used
+     //   decimals: 3
+     // },
+      {
+        symbol: "🌱",
+        accessorPrefixKey: "SPROUT",
+        decimals: 3
+      },      
+      {
+        symbol: "❤️",
+        accessorPrefixKey: "LOVE",
+        decimals: 3
+      },
+      {
+        symbol: "🍕",
+        accessorPrefixKey: "PIZZA",
+        decimals: 3
+      },
+      {
+        symbol: "🍊",
+        accessorPrefixKey: "HOA",
+        decimals: 3
+      },
+      {
+        symbol: "BEPE",
+        accessorPrefixKey: "BEPE",
+        decimals: 3
+      },
+      {
+        symbol: "Neckcoin",
+        accessorPrefixKey: "NeckCoin",
+        decimals: 3
+      },
+      {
+        symbol: "$CHIA",
+        accessorPrefixKey: "$CHIA",
+        decimals: 3
+      },
+      //{
+    //    symbol: "🧙‍♂️",
+    //    accessorPrefixKey: "MANA",
+    //    decimals: 3
+    //  },
+    //  {
+    //    symbol: "🪄⚡️",
+    //    accessorPrefixKey: "SP",
+    //    decimals: 3
+    //  },      
+
+
+    ]
+  },
   {
     name: "ERC-20 Bridge",
     tokens: [
@@ -35,31 +109,6 @@ const liveAppsConfig = [
       {
         symbol: "USDT",
         accessorPrefixKey: "USDT",
-        decimals: 3
-      }
-    ]
-  },
-  {
-    name: "CAT Bridge",
-    tokens: [
-      {
-        symbol: "XCH",
-        accessorPrefixKey: "XCH",
-        decimals: 12
-      },
-      {
-        symbol: "HOA",
-        accessorPrefixKey: "HOA",
-        decimals: 3
-      },
-      {
-        symbol: "DBX",
-        accessorPrefixKey: "DBX",
-        decimals: 3
-      },
-      {
-        symbol: "SBX",
-        accessorPrefixKey: "SBX",
         decimals: 3
       }
     ]
@@ -82,13 +131,19 @@ function LiveApps({ appIndex = 0 }: { appIndex: number }) {
     queryFn: () => fetch(`${WATCHER_API_ROOT}stats`).then(res => res.json())
   })
 
-
+  // Logging the entire data object for inspection
+  console.log("Fetched data:", data);
   if (isLoading || !data) return <div className="h-full min-h-[350px]"></div>
 
 
   const getTokenTableRow = (token: typeof liveAppsConfig[0]["tokens"][0]) => {
-    const lockedValue = formatNumber(data[`${token.accessorPrefixKey}_locked` as keyof StatsResponse], token.decimals)
-    const volumeValue = formatNumber(data[`${token.accessorPrefixKey}_total_volume` as keyof StatsResponse], token.decimals)
+    const lockedKey = `${token.accessorPrefixKey}_locked` as keyof StatsResponse;
+    const volumeKey = `${token.accessorPrefixKey}_total_volume` as keyof StatsResponse;
+    // Log specific key values
+    console.log(`Data for ${token.symbol}: Locked =`, data[lockedKey], ", Total Volume =", data[volumeKey]);
+    
+    const lockedValue = formatNumber(data[lockedKey], token.decimals);
+    const volumeValue = formatNumber(data[volumeKey], token.decimals);
     return (
       <tr className="border-b last:border-0" key={token.accessorPrefixKey}>
         <td className="text-center py-2">
