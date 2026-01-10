@@ -1301,8 +1301,8 @@ export const IYKYK_XCH_MEMECOIN_TOKEN_BASE_ONLY: Token = {
   additionalWarning: null,
 }
 
-const bytecash_MEMECOIN_ASSET_ID_MAINNET = '623c352de013e561656678f57058f7728aab631aa3aaab685fbe7918cea9b001'
-const wizard_bucks_MEMECOIN_ADDRESS_BASE_MAINNET = '0x28Bc22d46d42cdba838F86E018F560c5080E3F6A'
+const bytecash_MEMECOIN_ASSET_ID_MAINNET = 'ae1536f56760e471ad85ead45f00d680ff9cca73b8cc3407be778f1c0c606eac'
+const wizard_bucks_MEMECOIN_ADDRESS_BASE_MAINNET = '0x39916e508e389FBB4dDC3d1a38a5801f4eE253c7'
 
 export const wizard_bucks_MEMECOIN_TOKEN_BASE_ONLY: Token = {
   symbol: '🧙‍♂️💸',
