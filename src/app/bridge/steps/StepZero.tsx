@@ -24,7 +24,7 @@ export default function StepZero() {
   const router = useRouter()
   const [
     tokenSymbol, setTokenSymbol
-  ] = useState(TOKENS[0].symbol)
+  ] = useState(TOKENS[1].symbol)
 
   const token = TOKENS.find((t: Token) => t.symbol === tokenSymbol)!
   const networks: Network[] = Array.from(new Set(

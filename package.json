@@ -23,6 +23,7 @@
     "buffer": "^6.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.1",
     "ethers": "^6.11.1",
     "greenwebjs": "^1.1.9",
     "lossless-json": "^4.0.1",
