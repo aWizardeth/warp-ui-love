@@ -8,6 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ethers } from "ethers";
 import * as GreenWeb from 'greenwebjs'
 import { Button } from "@/components/ui/button";
+import CopyButton from "@/components/CopyButton";
+import { CopyableLongHexString } from "@/components/CopyableHexString";
 import Link from "next/link";
 import { getStepThreeURL, getStepTwoURL } from "@/app/bridge/steps/urls";
 
@@ -95,17 +97,17 @@ export function MessageTableBody({
     return (
       <tr key={msgKey}>
         <td className="whitespace-nowrap px-3 py-8 text-sm text-center">
-          0x{message.nonce.slice(0, 4)}...{message.nonce.slice(-4)}
+          <CopyButton copyText={"0x" + message.nonce} variant="ghost" height="2rem">0x{message.nonce.slice(0, 4)}...{message.nonce.slice(-4)}</CopyButton>
         </td>
         <td className="whitespace-nowrap px-3 py-8 text-sm text-center">
-          0x{message.source_transaction_hash.slice(0, 4)}...{message.source_transaction_hash.slice(-4)}
+          <CopyButton copyText={"0x" + message.source_transaction_hash} variant="ghost" height="2rem">0x{message.source_transaction_hash.slice(0, 4)}...{message.source_transaction_hash.slice(-4)}</CopyButton>
         </td>
         <td className="whitespace-nowrap px-3 py-8 text-sm text-center">
           <div className="flex items-center justify-left">
             {withToolTip(getChainIcon(sourceChain.displayName), sourceChain.displayName)}
             <div className="pl-2 text-left">
               <p className="text-md">{sourceChain.displayName}</p>
-              <p className="text-md">{messageSourceAddress.slice(0, 4 + (message.source_chain === 'xch' ? 4 : 2))}...{messageSourceAddress.slice(-4)}</p>
+              <CopyableLongHexString hexString={messageSourceAddress} className="text-md" />
             </div>
           </div>
         </td>
@@ -114,7 +116,7 @@ export function MessageTableBody({
             {withToolTip(getChainIcon(destinationChain.displayName), destinationChain.displayName)}
             <div className="pl-2 text-left">
               <p className="text-md">{destinationChain.displayName}</p>
-              <p className="text-md">{messageDestinationAddress.slice(0, 4 + (message.destination_chain === 'xch' ? 4 : 2))}...{messageDestinationAddress.slice(-4)}</p>
+              <CopyableLongHexString hexString={messageDestinationAddress} className="text-md" />
             </div>
           </div>
         </td>
