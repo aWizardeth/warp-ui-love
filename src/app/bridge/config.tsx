@@ -1168,7 +1168,7 @@ export const GYATT_MEMECOIN_TOKEN_BASE_ONLY: Token = {
   additionalWarning: null,
 }
 
-const FAITH_MEMECOIN_ASSET_ID_MAINNET = ''
+const FAITH_MEMECOIN_ASSET_ID_MAINNET = '699ed0a27560ce47130c906f3ce8ffaf9b7009637446d04c21220bef615622bc'
 const FAITH_MEMECOIN_ADDRESS_ETH_MAINNET = '0xb66f07d7bf1f048ea0600b3e6eb480eda951392a'
 
 export const FAITH_MEMECOIN_TOKEN_ETH_ONLY: Token = {
@@ -1320,6 +1320,25 @@ export const wizard_bucks_MEMECOIN_TOKEN_BASE_ONLY: Token = {
   additionalWarning: null,
 }
 
+const HODL_MEMECOIN_ASSET_ID_MAINNET = 'e335003c6d59aaaabe27eeeaf8a7b1308765f6bc9492a0b16394f50dec6bdcb7'
+const HODL_MEMECOIN_ADDRESS_BASE_MAINNET = '0xb43ba3fD8ac8b16ED52CFBE72738967C2AD9cC03'
+
+export const HODL_MEMECOIN_TOKEN_BASE_ONLY: Token = {
+  symbol: '💎',
+  getSpecificSymbol: makeCoinsetNativeToken('💎'),
+  sourceNetworkType: NetworkType.COINSET,
+  supported: [
+    {
+      evmNetworkId: BASE_NETWORK.id,
+      coinsetNetworkId: CHIA_NETWORK.id,
+      assetId: HODL_MEMECOIN_ASSET_ID_MAINNET,
+      contractAddress: HODL_MEMECOIN_ADDRESS_BASE_MAINNET
+    },
+  ],
+  memecoin: true,
+  additionalWarning: null,
+}
+
 export const TOKENS = TESTNET ? [
   ETH_TOKEN,
   XCH_TOKEN,
@@ -1330,6 +1349,7 @@ export const TOKENS = TESTNET ? [
   XCH_TOKEN,
   CASTER_MEMECOIN_TOKEN_BASE_ONLY,
   SP_MEMECOIN_TOKEN_BASE_ONLY,
+  HODL_MEMECOIN_TOKEN_BASE_ONLY,
   wizard_bucks_MEMECOIN_TOKEN_BASE_ONLY,
   LOVE_MEMECOIN_TOKEN_BASE_ONLY,
   SPROUT_MEMECOIN_TOKEN_BASE_ONLY,
